@@ -3,18 +3,23 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import MovieList from "./components/movie/MovieList";
 import CartContextProvider from "./contexts/CartContext";
+import { useTheme } from "./contexts/ThemeContext";
 
 const App = () => {
+  const { darkMode } = useTheme();
+
   return (
     <CartContextProvider>
-      <Header />
-      <main>
-        <div className="container grid lg:grid-cols-[218px_1fr] gap-[3.5rem]">
-          <Sidebar />
-          <MovieList />
-        </div>
-      </main>
-      <Footer />
+      <div className={`w-full h-full ${darkMode ? "dark" : ""}`}>
+        <Header />
+        <main>
+          <div className="container grid lg:grid-cols-[218px_1fr] gap-[3.5rem]">
+            <Sidebar />
+            <MovieList />
+          </div>
+        </main>
+        <Footer />
+      </div>
     </CartContextProvider>
   );
 };

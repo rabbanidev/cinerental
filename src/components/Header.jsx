@@ -3,10 +3,12 @@ import { assests } from "../assets";
 import Modal from "./Modal";
 import CartList from "./cart/CartList";
 import { useCart } from "../contexts/CartContext";
+import { useTheme } from "../contexts/ThemeContext";
 
 const Header = () => {
   const [showCart, setShowCart] = useState(false);
   const { cartData } = useCart();
+  const { darkMode, onThemeToggle } = useTheme();
 
   return (
     <header>
@@ -28,8 +30,14 @@ const Header = () => {
             <a
               className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block"
               href="#"
+              onClick={onThemeToggle}
             >
-              <img src={assests.icons.moon} width="24" height="24" alt="Moon" />
+              <img
+                src={darkMode ? assests.icons.sun : assests.icons.moon}
+                width="24"
+                height="24"
+                alt="Moon"
+              />
             </a>
           </li>
           <li>
