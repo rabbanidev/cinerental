@@ -6,10 +6,12 @@ import { getMovieImgUrl } from "../../utils/getImgurl";
 import Modal from "../Modal";
 import MovieDetails from "./MovieDetails";
 import Rateing from "./Rateing";
+import { useCart } from "../../contexts/CartContext";
 
 const MovieCard = ({ movie }) => {
   const [show, setShow] = useState(false);
   const [movieSelection, setMovieSelection] = useState(null);
+  const { cartData, setCartData } = useCart();
 
   // Movie selection handler
   const handleMovieSelection = () => {
@@ -21,6 +23,17 @@ const MovieCard = ({ movie }) => {
   const handleModalClose = () => {
     setMovieSelection(null);
     setShow(false);
+  };
+
+  // Add to Cart Handler
+  const handleAddToCart = (event, movie) => {
+    event.stopPropagation();
+    const found = cartData.find((item) => item.id === movie.id);
+    if (!found) {
+      setCartData([...cartData, movie]);
+    } else {
+      throw new Error("Already movie added into cart!");
+    }
   };
 
   const { cover, title, genre, rating, price } = movie;
@@ -41,6 +54,7 @@ const MovieCard = ({ movie }) => {
             <a
               className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
               href="#"
+              onClick={(e) => handleAddToCart(e, movie)}
             >
               <img src={assests.tag} alt="Tag" />
               <span>${price} | Add to Cart</span>
@@ -50,7 +64,11 @@ const MovieCard = ({ movie }) => {
       </figure>
 
       <Modal show={show} size="lg">
-        <MovieDetails movie={movieSelection} onClose={handleModalClose} />
+        <MovieDetails
+          movie={movieSelection}
+          onClose={handleModalClose}
+          onAddToCart={handleAddToCart}
+        />
       </Modal>
     </>
   );

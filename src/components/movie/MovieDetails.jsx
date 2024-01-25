@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { getMovieImgUrl } from "../../utils/getImgurl";
 
-const MovieDetails = ({ movie, onClose }) => {
+const MovieDetails = ({ movie, onClose, onAddToCart }) => {
   const { cover, title, description, genre, price } = movie;
 
   return (
@@ -24,6 +24,7 @@ const MovieDetails = ({ movie, onClose }) => {
           <a
             className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
             href="#"
+            onClick={(e) => onAddToCart(e, movie)}
           >
             <img src="./assets/tag.svg" alt="" />
             <span>${price} | Add to Cart</span>

@@ -2,14 +2,16 @@ import { useState } from "react";
 import { assests } from "../assets";
 import Modal from "./Modal";
 import CartList from "./cart/CartList";
+import { useCart } from "../contexts/CartContext";
 
 const Header = () => {
   const [showCart, setShowCart] = useState(false);
+  const { cartData } = useCart();
 
   return (
     <header>
       <nav className="container flex items-center justify-between space-x-10 py-6">
-        <a href="index.html">
+        <a href="/">
           <img src={assests.logo} width="139" height="26" alt="Logo" />
         </a>
 
@@ -36,6 +38,11 @@ const Header = () => {
               href="#"
               onClick={() => setShowCart(true)}
             >
+              {cartData.length > 0 && (
+                <span className="rounded-full absolute top-[-12px] left-[28px] bg-[#12CF6F] text-white text-center p-[2px] w-[30px] h-[30px]">
+                  {cartData.length}
+                </span>
+              )}
               <img
                 src={assests.shoppingCart}
                 width="24"
